@@ -1,0 +1,5 @@
+name: digital_sky
+
+packages:
+  - apps/**
+  - packages/**
