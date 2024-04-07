@@ -1,9 +1,12 @@
 using DigitalSky.Hubs;
+using DigitalSkyServer.Services;
 using Microsoft.AspNetCore.Cors.Infrastructure;
 
 const string CORS_POLICY = "SdigitalSky.cors_policy.allowAll";
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<DigitalSkyBrokerService>();
 
 builder.Services.AddCors(options =>
 {

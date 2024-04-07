@@ -3,6 +3,6 @@
 /// More dartdocs go here.
 library;
 
-export 'src/digital_sky_communication_channel.dart';
+export 'src/src.dart';
 
 // TODO: Export any libraries intended for clients of this package.
