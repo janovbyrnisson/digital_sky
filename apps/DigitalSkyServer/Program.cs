@@ -10,7 +10,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(CORS_POLICY,
         policy =>
         {
-            policy.WithOrigins("http://localhost:60321", "http://localhost:60416", "http://eroslevente.com")
+            policy.WithOrigins("http://localhost:8091", "http://localhost:8092", "http://eroslevente.com")
                   .AllowAnyHeader()
                   .AllowAnyMethod()
                   .AllowCredentials()
