@@ -50,7 +50,7 @@ class _MainAppState extends ConsumerState<MainApp> {
               top: 0,
               left: 0,
               bottom: 0,
-              width: 350,
+              width: 400,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -72,11 +72,17 @@ class _MainAppState extends ConsumerState<MainApp> {
                                   Icons.person,
                                   color: player.status == PlayerStatus.present ? Colors.green : Colors.amber,
                                 ),
-                                title: Text(player.name),
+                                title: Text(
+                                  player.name,
+                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                ),
                                 subtitle: Text(
                                   player.clientId,
                                   style: const TextStyle(fontSize: 12),
                                 ),
+                                dense: true,
+                                onTap: () {},
+                                trailing: Text("🪙 2356"),
                               ))
                           .toList(),
                     ),
@@ -85,7 +91,7 @@ class _MainAppState extends ConsumerState<MainApp> {
               ),
             ),
             Positioned(
-              left: 350,
+              left: 400,
               top: 0,
               right: 0,
               bottom: 0,
