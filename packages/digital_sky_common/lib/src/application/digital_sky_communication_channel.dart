@@ -35,6 +35,15 @@ class DigitalSkyCommunicationChannel {
     hubConnection = HubConnectionBuilder().withUrl(serverUrl).withAutomaticReconnect().build();
     hubConnection.onclose(({error}) => print("Connection Closed"));
     hubConnection.on("ReceiveMessage", _handleMessage);
+
+    hubConnection.onreconnected(
+      ({connectionId}) {
+        final jsonMessage =
+            jsonEncode(Message(id: Uuid().v4(), type: MessageType.ping, clientId: clientId, content: "").toJson());
+        hubConnection.invoke("SendMessage", args: <Object>[jsonMessage]);
+      },
+    );
+
     await hubConnection.start();
   }
 

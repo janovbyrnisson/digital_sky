@@ -11,8 +11,13 @@ class PlayerList extends _$PlayerList {
   }
 
   void addPlayer(Player player) {
-    final newList = [...state, player];
-    state = newList;
+    final existingIndex = state.indexWhere((element) => element.clientId == player.clientId);
+    if (existingIndex > -1) {
+      state[existingIndex] = player;
+      state = [...state];
+    } else {
+      state = [...state, player];
+    }
   }
 
   void removePlayer(String clientId) {

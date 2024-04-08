@@ -18,6 +18,7 @@ class MasterService {
 
   void init() {
     _communicationChannel
+      ..addMessageListener(MessageType.ping, _onPlayerPing)
       ..addMessageListener(MessageType.playerJoin, _onPlayerJoin)
       ..addMessageListener(MessageType.playerLeft, _onPlayerLeave);
   }
@@ -26,6 +27,11 @@ class MasterService {
     ref
         .read(playerListProvider.notifier)
         .addPlayer(Player(clientId: message.clientId!, name: message.content, status: PlayerStatus.present));
+  }
+
+  void _onPlayerPing(Message message) {
+    print("MASTER SAYS: Player pinged me! ${message.clientId}");
+    ref.read(playerListProvider.notifier).setPlayerStatus(message.clientId!, PlayerStatus.present);
   }
 
   void _onPlayerLeave(Message message) {

@@ -25,6 +25,7 @@ Map<String, dynamic> _$$MessageImplToJson(_$MessageImpl instance) =>
     };
 
 const _$MessageTypeEnumMap = {
+  MessageType.ping: 'ping',
   MessageType.masterJoin: 'masterJoin',
   MessageType.playerJoin: 'playerJoin',
   MessageType.playerJoinFinished: 'playerJoinFinished',

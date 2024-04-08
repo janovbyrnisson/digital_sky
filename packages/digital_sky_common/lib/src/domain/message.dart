@@ -4,6 +4,7 @@ part 'message.freezed.dart';
 part 'message.g.dart';
 
 enum MessageType {
+  ping,
   masterJoin,
   playerJoin,
   playerJoinFinished,
