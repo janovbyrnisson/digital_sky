@@ -6,6 +6,8 @@ part 'message.g.dart';
 enum MessageType {
   masterJoin,
   playerJoin,
+  playerJoinFinished,
+  playerList,
 }
 
 @freezed

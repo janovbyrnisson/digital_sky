@@ -6,6 +6,7 @@ const string CORS_POLICY = "SdigitalSky.cors_policy.allowAll";
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSingleton<AwsCryptoService>();
 builder.Services.AddSingleton<DigitalSkyBrokerService>();
 
 builder.Services.AddCors(options =>
