@@ -8,27 +8,27 @@ namespace DigitalSkyServer.Services
     {
         public string MasterConnectionId { get; private set; } = "";
         public string MasterId { get; private set; } = "";
-        public IClientProxy? Master { get; private set; } = null;
+        public string Master { get; private set; } = "";
 
         Dictionary<string, string> _playerConnectionMap = new Dictionary<string, string>();
-        Dictionary<string, ISingleClientProxy> _players = new Dictionary<string, ISingleClientProxy>();
+        Dictionary<string, string> _players = new Dictionary<string, string>();
 
-        public void JoinPlayer(string clientId, ISingleClientProxy player, string connectionId)
+        public void JoinPlayer(string clientId, string playerUserId, string connectionId)
         {
-            _players[clientId] = player;
+            _players[clientId] = playerUserId;
             _playerConnectionMap[connectionId] = clientId;
             Console.WriteLine($"[BROKER] Player joined: {clientId} :: {connectionId}");
         }
 
-        public void JoinMaster(string clientId, IClientProxy master, string conenctionId)
+        public void JoinMaster(string clientId, string masterUserId, string conenctionId)
         {
             MasterConnectionId = conenctionId;
             MasterId = clientId;
-            Master = master;
+            Master = masterUserId;
             Console.WriteLine($"[BROKER] Master joined: {clientId}");
         }
 
-        public ISingleClientProxy Player(string clientId)
+        public string Player(string clientId)
         {
             return _players[clientId];
         }
@@ -36,6 +36,7 @@ namespace DigitalSkyServer.Services
         public void RemovePlayer(string clientId)
         {
             _players.Remove(clientId);
+            _playerConnectionMap.Remove(_playerConnectionMap.FirstOrDefault(x => x.Value == clientId).Key);
             Console.WriteLine($"[BROKER] Player removed: {clientId}");
         }
 

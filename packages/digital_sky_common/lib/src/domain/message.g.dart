@@ -29,4 +29,5 @@ const _$MessageTypeEnumMap = {
   MessageType.playerJoin: 'playerJoin',
   MessageType.playerJoinFinished: 'playerJoinFinished',
   MessageType.playerList: 'playerList',
+  MessageType.playerLeft: 'playerLeft',
 };

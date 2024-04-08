@@ -10,6 +10,9 @@ part 'digital_sky_communication_channel.g.dart';
 
 @Riverpod(keepAlive: true)
 DigitalSkyCommunicationChannel communicationChannel(CommunicationChannelRef ref) {
+  ref.onDispose(() {
+    ref.read(communicationChannelProvider).hubConnection.stop();
+  });
   return DigitalSkyCommunicationChannel();
 }
 
@@ -29,10 +32,9 @@ class DigitalSkyCommunicationChannel {
     localStorage.setItem('digisky.clientId', clientId);
 
     final serverUrl = "http://localhost:5220/channel";
-    hubConnection = HubConnectionBuilder().withUrl(serverUrl).build();
+    hubConnection = HubConnectionBuilder().withUrl(serverUrl).withAutomaticReconnect().build();
     hubConnection.onclose(({error}) => print("Connection Closed"));
     hubConnection.on("ReceiveMessage", _handleMessage);
-
     await hubConnection.start();
   }
 

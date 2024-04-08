@@ -29,13 +29,13 @@ namespace DigitalSky.Hubs
 
             if (message?.Type == "masterJoin")
             {
-                _brokerService.JoinMaster(message.ClientId, Clients.Caller, Context.ConnectionId);
+                _brokerService.JoinMaster(message.ClientId, Context.UserIdentifier!, Context.ConnectionId);
                 await Clients.Others.SendAsync("ReceiveMessage", jsonMessage);
             }
             else if (message?.Type == "playerJoin")
             {
-                _brokerService.JoinPlayer(message.ClientId, Clients.Caller, Context.ConnectionId);
-                await _brokerService.Master!.SendAsync("ReceiveMessage", jsonMessage);
+                _brokerService.JoinPlayer(message.ClientId, Context.UserIdentifier!, Context.ConnectionId);
+                await Clients.User(_brokerService.Master!).SendAsync("ReceiveMessage", jsonMessage);
 
                 var encryptedName = "";
 
@@ -61,7 +61,7 @@ namespace DigitalSky.Hubs
 
         public override Task OnConnectedAsync()
         {
-            Console.WriteLine($"[HUB] Connection established: {Context.ConnectionId}");
+            Console.WriteLine($"[HUB] Connection established: {Context.ConnectionId} {Context.UserIdentifier}");
             // Add your own code here.
             // For example: in a chat application, record the association between
             // the current connection ID and user name, and mark the user as online.
@@ -75,6 +75,17 @@ namespace DigitalSky.Hubs
         {
             var clientId = _brokerService.LookUpPlayerClientId(Context.ConnectionId);
             Console.WriteLine($"[HUB] Connection closed: {Context.ConnectionId} {clientId}");
+            Clients.User(_brokerService.Master!).SendAsync("ReceiveMessage", JsonSerializer.Serialize(new Message
+            {
+                Id = System.Guid.NewGuid().ToString(),
+                Type = "playerLeft",
+                ClientId = clientId ?? "",
+                Target = _brokerService.MasterId,
+                Content = clientId ?? ""
+            }, new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            }));
             // Add your own code here.
             // For example: in a chat application, mark the user as offline,
             // delete the association between the current connection id and user name.

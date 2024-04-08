@@ -2,9 +2,7 @@ import 'dart:convert';
 
 import 'package:digital_sky_common/digital_sky_common.dart';
 import 'package:digital_sky_player/presentation/shared/logo.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -130,9 +128,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       fontSize: 21,
                     ),
                   ),
-                  const SizedBox.square(
-                    dimension: 20,
-                  ),
+                  const SizedBox.square(dimension: 20),
                   Flexible(
                     child: Container(
                       padding: const EdgeInsets.all(20),
@@ -141,17 +137,27 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         color: Colors.white.withOpacity(0.8),
                       ),
                       child: SingleChildScrollView(
-                        child: SelectableRegion(
-                          focusNode: FocusNode(),
-                          selectionControls: MaterialTextSelectionControls(),
-                          child: Text(
-                            "Your name encrypted: \n\n ${utf8.decode(base64Decode(_encryptedName))}",
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: Colors.black87,
-                              fontSize: 16,
+                        child: Column(
+                          children: [
+                            const Icon(Icons.info),
+                            const Text(
+                              "Your name encrypted:",
+                              style: TextStyle(fontWeight: FontWeight.bold),
                             ),
-                          ),
+                            const SizedBox.square(dimension: 20),
+                            SelectableRegion(
+                              focusNode: FocusNode(),
+                              selectionControls: MaterialTextSelectionControls(),
+                              child: Text(
+                                utf8.decode(base64Decode(_encryptedName)),
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  color: Colors.black87,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),

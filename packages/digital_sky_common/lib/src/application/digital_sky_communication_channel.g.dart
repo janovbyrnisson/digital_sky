@@ -7,7 +7,7 @@ part of 'digital_sky_communication_channel.dart';
 // **************************************************************************
 
 String _$communicationChannelHash() =>
-    r'f4e9d17ee3a96ed1baf7a6ac8560ca48982d64c9';
+    r'93746ff986548a99993be94ded498d2d1f52dbd7';
 
 /// See also [communicationChannel].
 @ProviderFor(communicationChannel)

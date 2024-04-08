@@ -8,6 +8,7 @@ enum MessageType {
   playerJoin,
   playerJoinFinished,
   playerList,
+  playerLeft,
 }
 
 @freezed

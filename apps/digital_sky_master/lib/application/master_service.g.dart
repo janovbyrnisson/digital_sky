@@ -6,7 +6,7 @@ part of 'master_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$masterServiceHash() => r'0b7fa359abcf22bddd1bc6ac7a774359d59e8f89';
+String _$masterServiceHash() => r'3364d2823d1cb49ccca3ecf4c73bec65b8cbb80b';
 
 /// See also [masterService].
 @ProviderFor(masterService)
