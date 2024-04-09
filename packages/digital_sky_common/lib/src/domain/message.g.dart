@@ -31,4 +31,5 @@ const _$MessageTypeEnumMap = {
   MessageType.playerJoinFinished: 'playerJoinFinished',
   MessageType.playerList: 'playerList',
   MessageType.playerLeft: 'playerLeft',
+  MessageType.gameUpdate: 'gameUpdate',
 };

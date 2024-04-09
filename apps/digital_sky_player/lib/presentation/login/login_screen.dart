@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:digital_sky_common/digital_sky_common.dart';
+import 'package:digital_sky_player/application/providers/game_state_provider.dart';
+import 'package:digital_sky_player/application/providers/player_name_provider.dart';
+import 'package:digital_sky_player/presentation/game/game_screen.dart';
 import 'package:digital_sky_player/presentation/shared/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,6 +28,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     });
 
     ref.read(communicationChannelProvider).addMessageListener(MessageType.playerJoinFinished, _onJoinFinished);
+    ref.read(communicationChannelProvider).addMessageListener(MessageType.gameUpdate, _onInitialGameUpdate);
 
     await ref
         .read(communicationChannelProvider)
@@ -41,6 +45,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     });
 
     ref.read(communicationChannelProvider).removeMessageListener(MessageType.playerJoin, _onJoinFinished);
+    ref.read(playerNameProvider.notifier).setPlayerName(_nameEditingController.text);
+  }
+
+  void _onInitialGameUpdate(Message message) async {
+    Future.delayed(const Duration(milliseconds: 1500)).then((value) {
+      final gameState = GameState.fromQueryString(message.content);
+      if (gameState.started == "true") {
+        ref.read(communicationChannelProvider).removeMessageListener(MessageType.gameUpdate, _onInitialGameUpdate);
+        ref.read(gameServiceProvider.notifier).init(gameState);
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const GameScreen()));
+      }
+    });
   }
 
   @override

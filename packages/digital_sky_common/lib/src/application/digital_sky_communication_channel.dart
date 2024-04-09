@@ -51,8 +51,7 @@ class DigitalSkyCommunicationChannel {
     print('Sending message');
     final jsonMessage = jsonEncode(message.copyWith(id: Uuid().v4(), clientId: clientId).toJson());
 
-    final result = await hubConnection.invoke("SendMessage", args: <Object>[jsonMessage]);
-    print("Result: '$result");
+    await hubConnection.invoke("SendMessage", args: <Object>[jsonMessage]);
   }
 
   void addMessageListener(MessageType type, void Function(Message) listener) {

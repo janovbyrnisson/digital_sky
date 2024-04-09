@@ -10,6 +10,7 @@ enum MessageType {
   playerJoinFinished,
   playerList,
   playerLeft,
+  gameUpdate,
 }
 
 @freezed
