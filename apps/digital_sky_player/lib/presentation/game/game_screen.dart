@@ -1,4 +1,5 @@
 import 'package:digital_sky_player/application/providers/game_state_provider.dart';
+import 'package:digital_sky_player/presentation/shared/player_score.dart';
 import 'package:digital_sky_player/presentation/shared/question.dart';
 import 'package:digital_sky_player/presentation/shared/wave_text.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class _GameScreenState extends ConsumerState<GameScreen> {
       body: Stack(
         children: [
           Positioned.fill(child: Image.asset("assets/images/background.webp", fit: BoxFit.cover)),
+          const Positioned(top: 20, left: 20, right: 20, child: PlayerScore()),
           if (gameState!.started == "false")
             const Center(
               child: Text(
@@ -41,10 +43,11 @@ class _GameScreenState extends ConsumerState<GameScreen> {
                 ),
               )
             else
-              const Center(
+              Center(
                 child: Question(
+                  gameState: gameState,
                   animate: true,
-                  delayDuration: Duration(milliseconds: 200),
+                  delayDuration: const Duration(milliseconds: 200),
                 ),
               ),
           ] else

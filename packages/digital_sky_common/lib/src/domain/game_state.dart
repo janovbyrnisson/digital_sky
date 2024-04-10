@@ -17,7 +17,7 @@ class GameState with _$GameState {
     @Default("") String answer1,
     @Default("") String answer2,
     @Default("") String answer3,
-    @Default("") String playerScore,
+    @Default("") String alreadyAnswered,
   }) = _GameState;
 
   factory GameState.fromJson(Map<String, dynamic> json) => _$GameStateFromJson(json);

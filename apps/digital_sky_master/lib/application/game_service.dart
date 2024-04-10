@@ -1,4 +1,5 @@
-import 'package:digital_sky_common/src/domain/game_state.dart';
+import 'package:digital_sky_common/digital_sky_common.dart';
+import 'package:digital_sky_master/data/question_pool.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'game_service.g.dart';
@@ -23,6 +24,23 @@ class GameService extends _$GameService {
   }
 
   void setQuestion(String questionId) {
-    state = state.copyWith(questionId: questionId);
+    if (questionId.isNotEmpty) {
+      final question = ref.read(questionPoolProvider).where((element) => element.id == questionId).first;
+      state = state.copyWith(
+        questionId: questionId,
+        question: question.question,
+        answer1: question.options[0],
+        answer2: question.options[1],
+        answer3: question.options[2],
+      );
+    } else {
+      state = state.copyWith(
+        questionId: "",
+        question: "",
+        answer1: "",
+        answer2: "",
+        answer3: "",
+      );
+    }
   }
 }

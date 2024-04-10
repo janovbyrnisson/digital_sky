@@ -32,4 +32,6 @@ const _$MessageTypeEnumMap = {
   MessageType.playerList: 'playerList',
   MessageType.playerLeft: 'playerLeft',
   MessageType.gameUpdate: 'gameUpdate',
+  MessageType.playerAnswer: 'playerAnswer',
+  MessageType.questionResult: 'questionResult',
 };

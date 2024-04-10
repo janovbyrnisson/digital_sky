@@ -1,8 +1,11 @@
 import 'package:digital_sky_common/digital_sky_common.dart';
 import 'package:digital_sky_master/application/game_service.dart';
 import 'package:digital_sky_master/application/master_service.dart';
+import 'package:digital_sky_master/application/player_score_provider.dart';
 import 'package:digital_sky_master/domain/player.dart';
 import 'package:digital_sky_master/presentation/player_list_provider.dart';
+import 'package:digital_sky_master/presentation/question_status_provider.dart';
+import 'package:digital_sky_master/presentation/questions_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -42,6 +45,7 @@ class _MainAppState extends ConsumerState<MainApp> {
         .read(communicationChannelProvider)
         .sendMessage(const Message(type: MessageType.masterJoin, content: "Master joining"));
     ref.read(masterServiceProvider).init();
+    ref.read(masterServiceProvider).sendGameUpdate();
   }
 
   void _startGame() {
@@ -68,6 +72,13 @@ class _MainAppState extends ConsumerState<MainApp> {
   Widget build(BuildContext context) {
     final players = ref.watch(playerListProvider);
     final gameState = ref.watch(gameServiceProvider);
+    final playerScores = ref.watch(playerScoreProvider);
+
+    players.sort((a, b) {
+      final aScore = playerScores.containsKey(a.clientId) ? playerScores[a.clientId] : 0;
+      final bScore = playerScores.containsKey(b.clientId) ? playerScores[b.clientId] : 0;
+      return bScore! >= aScore! ? 1 : -1;
+    });
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -113,7 +124,8 @@ class _MainAppState extends ConsumerState<MainApp> {
                                 ),
                                 dense: true,
                                 onTap: () {},
-                                trailing: Text("🪙 2356"),
+                                trailing: Text(
+                                    "🪙 ${playerScores.containsKey(player.clientId) ? playerScores[player.clientId] : "0"}"),
                               ))
                           .toList(),
                     ),
@@ -158,12 +170,13 @@ class _MainAppState extends ConsumerState<MainApp> {
                     Expanded(
                       child: Container(
                         color: Colors.blueGrey.shade50,
+                        child: const QuestionsList(),
                       ),
                     ),
                     Container(
                       padding: const EdgeInsets.all(15),
                       child: Wrap(
-                        spacing: 10,
+                        spacing: 5,
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           ElevatedButton(onPressed: _startGame, child: const Text("Start Game")),
@@ -190,12 +203,21 @@ class _MainAppState extends ConsumerState<MainApp> {
                             }).toList(),
                           ),
                           ElevatedButton(onPressed: _stopWave, child: const Text("Stop Wave")),
+                          const SizedBox(width: 10),
                           ElevatedButton(
-                              onPressed: () {
-                                ref.read(gameServiceProvider.notifier).setQuestion("Q123");
-                                ref.read(masterServiceProvider).sendGameUpdate();
-                              },
-                              child: const Text("Send Question")),
+                            onPressed: () {
+                              ref.read(gameServiceProvider.notifier).setQuestion("");
+                              ref.read(masterServiceProvider).sendGameUpdate();
+                            },
+                            child: const Text("Clear Question"),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              ref.read(masterServiceProvider).sendGameUpdate();
+                              ref.read(questionStatusProvider.notifier).setQuestionStatus(gameState.questionId, true);
+                            },
+                            child: const Text("Send Question"),
+                          ),
                         ],
                       ),
                     ),

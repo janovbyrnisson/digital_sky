@@ -11,6 +11,8 @@ enum MessageType {
   playerList,
   playerLeft,
   gameUpdate,
+  playerAnswer,
+  questionResult,
 }
 
 @freezed

@@ -53,6 +53,11 @@ namespace DigitalSky.Hubs
                 }, options);
                 await Clients.Caller.SendAsync("ReceiveMessage", encryptedJsonMessage);
             }
+            else if(message?.Type == "questionResult")
+            {
+                Console.WriteLine($"[HUB] Question result sent to: {message.Target}");
+                await Clients.User(_brokerService.Player(message.Target)).SendAsync("ReceiveMessage", jsonMessage);
+            }
             else
             {
                 await Clients.Others.SendAsync("ReceiveMessage", jsonMessage);

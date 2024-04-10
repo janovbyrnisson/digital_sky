@@ -34,4 +34,8 @@ class PlayerList extends _$PlayerList {
     }).toList();
     state = newList;
   }
+
+  Player getPlayer(String clientId) {
+    return state.firstWhere((element) => element.clientId == clientId);
+  }
 }

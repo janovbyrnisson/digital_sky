@@ -27,7 +27,7 @@ mixin _$GameState {
   String get answer1 => throw _privateConstructorUsedError;
   String get answer2 => throw _privateConstructorUsedError;
   String get answer3 => throw _privateConstructorUsedError;
-  String get playerScore => throw _privateConstructorUsedError;
+  String get alreadyAnswered => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,7 +48,7 @@ abstract class $GameStateCopyWith<$Res> {
       String answer1,
       String answer2,
       String answer3,
-      String playerScore});
+      String alreadyAnswered});
 }
 
 /// @nodoc
@@ -71,7 +71,7 @@ class _$GameStateCopyWithImpl<$Res, $Val extends GameState>
     Object? answer1 = null,
     Object? answer2 = null,
     Object? answer3 = null,
-    Object? playerScore = null,
+    Object? alreadyAnswered = null,
   }) {
     return _then(_value.copyWith(
       started: null == started
@@ -102,9 +102,9 @@ class _$GameStateCopyWithImpl<$Res, $Val extends GameState>
           ? _value.answer3
           : answer3 // ignore: cast_nullable_to_non_nullable
               as String,
-      playerScore: null == playerScore
-          ? _value.playerScore
-          : playerScore // ignore: cast_nullable_to_non_nullable
+      alreadyAnswered: null == alreadyAnswered
+          ? _value.alreadyAnswered
+          : alreadyAnswered // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -126,7 +126,7 @@ abstract class _$$GameStateImplCopyWith<$Res>
       String answer1,
       String answer2,
       String answer3,
-      String playerScore});
+      String alreadyAnswered});
 }
 
 /// @nodoc
@@ -147,7 +147,7 @@ class __$$GameStateImplCopyWithImpl<$Res>
     Object? answer1 = null,
     Object? answer2 = null,
     Object? answer3 = null,
-    Object? playerScore = null,
+    Object? alreadyAnswered = null,
   }) {
     return _then(_$GameStateImpl(
       started: null == started
@@ -178,9 +178,9 @@ class __$$GameStateImplCopyWithImpl<$Res>
           ? _value.answer3
           : answer3 // ignore: cast_nullable_to_non_nullable
               as String,
-      playerScore: null == playerScore
-          ? _value.playerScore
-          : playerScore // ignore: cast_nullable_to_non_nullable
+      alreadyAnswered: null == alreadyAnswered
+          ? _value.alreadyAnswered
+          : alreadyAnswered // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -197,7 +197,7 @@ class _$GameStateImpl extends _GameState {
       this.answer1 = "",
       this.answer2 = "",
       this.answer3 = "",
-      this.playerScore = ""})
+      this.alreadyAnswered = ""})
       : super._();
 
   factory _$GameStateImpl.fromJson(Map<String, dynamic> json) =>
@@ -224,11 +224,11 @@ class _$GameStateImpl extends _GameState {
   final String answer3;
   @override
   @JsonKey()
-  final String playerScore;
+  final String alreadyAnswered;
 
   @override
   String toString() {
-    return 'GameState(started: $started, wave: $wave, questionId: $questionId, question: $question, answer1: $answer1, answer2: $answer2, answer3: $answer3, playerScore: $playerScore)';
+    return 'GameState(started: $started, wave: $wave, questionId: $questionId, question: $question, answer1: $answer1, answer2: $answer2, answer3: $answer3, alreadyAnswered: $alreadyAnswered)';
   }
 
   @override
@@ -245,14 +245,14 @@ class _$GameStateImpl extends _GameState {
             (identical(other.answer1, answer1) || other.answer1 == answer1) &&
             (identical(other.answer2, answer2) || other.answer2 == answer2) &&
             (identical(other.answer3, answer3) || other.answer3 == answer3) &&
-            (identical(other.playerScore, playerScore) ||
-                other.playerScore == playerScore));
+            (identical(other.alreadyAnswered, alreadyAnswered) ||
+                other.alreadyAnswered == alreadyAnswered));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, started, wave, questionId,
-      question, answer1, answer2, answer3, playerScore);
+      question, answer1, answer2, answer3, alreadyAnswered);
 
   @JsonKey(ignore: true)
   @override
@@ -277,7 +277,7 @@ abstract class _GameState extends GameState {
       final String answer1,
       final String answer2,
       final String answer3,
-      final String playerScore}) = _$GameStateImpl;
+      final String alreadyAnswered}) = _$GameStateImpl;
   const _GameState._() : super._();
 
   factory _GameState.fromJson(Map<String, dynamic> json) =
@@ -298,7 +298,7 @@ abstract class _GameState extends GameState {
   @override
   String get answer3;
   @override
-  String get playerScore;
+  String get alreadyAnswered;
   @override
   @JsonKey(ignore: true)
   _$$GameStateImplCopyWith<_$GameStateImpl> get copyWith =>
