@@ -31,45 +31,48 @@ class _QuestionsListState extends ConsumerState<QuestionsList> {
     final answers = ref.watch(playerQuestionAnswersProvider);
     final questionStatus = ref.watch(questionStatusProvider);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: questions
-          .map((e) => RadioListTile(
-                value: e.id,
-                groupValue: selectedQuestionId,
-                title: Wrap(
-                  spacing: 10,
-                  children: [
-                    Icon(
-                      Icons.check_circle,
-                      color: questionStatus.containsKey(e.id) && questionStatus[e.id]! ? Colors.green : Colors.black26,
-                    ),
-                    Text("[Wave ${e.wave}]"),
-                    Text(
-                      e.question,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    Text(e.options.join(" | ")),
-                  ],
-                ),
-                subtitle: Wrap(
-                  spacing: 5,
-                  children: _getPlayerAnswersForQuestion(answers, e.id).map((e) {
-                    return Chip(
-                      label: Text(e.$1),
-                      labelPadding: const EdgeInsets.all(0),
-                      padding: const EdgeInsets.all(2),
-                      side: BorderSide.none,
-                      backgroundColor: e.$2 ? Colors.greenAccent : Colors.amberAccent,
-                    );
-                  }).toList(),
-                ),
-                isThreeLine: true,
-                onChanged: (value) {
-                  ref.read(gameServiceProvider.notifier).setQuestion(value!);
-                },
-              ))
-          .toList(),
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: questions
+            .map((e) => RadioListTile(
+                  value: e.id,
+                  groupValue: selectedQuestionId,
+                  title: Wrap(
+                    spacing: 10,
+                    children: [
+                      Icon(
+                        Icons.check_circle,
+                        color:
+                            questionStatus.containsKey(e.id) && questionStatus[e.id]! ? Colors.green : Colors.black26,
+                      ),
+                      Text("[Wave ${e.wave}]"),
+                      Text(
+                        e.question,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      Text(e.options.join(" | ")),
+                    ],
+                  ),
+                  subtitle: Wrap(
+                    spacing: 5,
+                    children: _getPlayerAnswersForQuestion(answers, e.id).map((e) {
+                      return Chip(
+                        label: Text(e.$1),
+                        labelPadding: const EdgeInsets.all(0),
+                        padding: const EdgeInsets.all(2),
+                        side: BorderSide.none,
+                        backgroundColor: e.$2 ? Colors.greenAccent : Colors.amberAccent,
+                      );
+                    }).toList(),
+                  ),
+                  isThreeLine: true,
+                  onChanged: (value) {
+                    ref.read(gameServiceProvider.notifier).setQuestion(value!);
+                  },
+                ))
+            .toList(),
+      ),
     );
   }
 }

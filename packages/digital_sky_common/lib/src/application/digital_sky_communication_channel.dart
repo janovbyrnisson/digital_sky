@@ -31,7 +31,8 @@ class DigitalSkyCommunicationChannel {
     clientId = localStorage.getItem('digisky.clientId') ?? Uuid().v4();
     localStorage.setItem('digisky.clientId', clientId);
 
-    final serverUrl = "http://localhost:5220/channel";
+    final serverUrl = "https://digitalsky-server.azurewebsites.net/channel";
+    // final serverUrl = "http://localhost:5220/channel";
     hubConnection = HubConnectionBuilder().withUrl(serverUrl).withAutomaticReconnect().build();
     hubConnection.onclose(({error}) => print("Connection Closed"));
     hubConnection.on("ReceiveMessage", _handleMessage);

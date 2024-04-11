@@ -53,8 +53,11 @@ class _QuestionState extends ConsumerState<Question> {
   @override
   void didUpdateWidget(covariant Question oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _stopwatch.reset();
-    _stopwatch.start();
+
+    if (_currentQuestionId != widget.gameState.questionId) {
+      _stopwatch.reset();
+      _stopwatch.start();
+    }
 
     setState(() {
       _opacity = 0;
